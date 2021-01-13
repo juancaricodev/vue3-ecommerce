@@ -14,11 +14,11 @@
       <div class="cart-content">
         <div class="cart-content__product">
           <img src="" alt="">
-          <span>Product - $ 500.000</span>
+          <span>{{ product.name }} - $ {{ new Intl.NumberFormat('es-CO').format(product.price) }}</span>
         </div>
         <div class="cart-content__product">
           <img src="" alt="">
-          <span>Product - $ 500.000</span>
+          <span>{{ product.name }} - $ {{ new Intl.NumberFormat('es-CO').format(product.price) }}</span>
         </div>
       </div>
     </header>
@@ -36,13 +36,13 @@
       </section>
 
       <section class="description">
-        <h4>Product</h4>
+        <h4>{{ product.name.toUpperCase() }} {{ product.stock === 0 ? '😭' : '😎' }}</h4>
         <span class="badge new">New</span>
         <span class="badge offer">Offer</span>
         <p class="description__status"></p>
-        <p class="description__price">$ 500.000</p>
+        <p class="description__price">$ {{ new Intl.NumberFormat('es-CO').format(product.price) }}</p>
         <p class="description__content">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium repellat repudiandae at non ipsa quidem culpa tempore! Doloribus vitae suscipit minus veritatis adipisci itaque, molestiae perferendis? Doloremque fugit commodi expedita?
+          {{ product.content }}
         </p>
         <div class="discount">
           <span>Discount Code:</span>
@@ -62,7 +62,7 @@
           product: {
             name: 'Camera',
             price: 450_000,
-            stock: 0,
+            stock: 1,
             content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium repellat repudiandae at non ipsa quidem culpa tempore! Doloribus vitae   suscipit minus veritatis adipisci itaque, molestiae perferendis? Doloremque fugit commodi expedita?`,
             images: [
               {
