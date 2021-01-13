@@ -4,12 +4,60 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style.css">
-  <title>My E-commerce with Vue.js 3</title>
+  <title>VueCommerce</title>
 </head>
 <body>
-  <div id="app"></div>
+  <div id="app">
+    <header>
+      <h3>VueCommerce</h3>
+      <button class="cart">Cart (0)</button>
+      <div class="cart-content">
+        <div class="cart-content__product">
+          <img src="" alt="">
+          <span>Product - $ 500.000</span>
+        </div>
+        <div class="cart-content__product">
+          <img src="" alt="">
+          <span>Product - $ 500.000</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="product">
+        <div class="product__thumbnails">
+          <div class="thumb"></div>
+          <div class="thumb"></div>
+        </div>
+
+        <div class="product__image">
+          <img src="" alt="">
+        </div>
+      </section>
+
+      <section class="description">
+        <h4>Product</h4>
+        <span class="badge new">New</span>
+        <span class="badge offer">Offer</span>
+        <p class="description__status"></p>
+        <p class="description__price">$ 500.000</p>
+        <p class="description__content">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium repellat repudiandae at non ipsa quidem culpa tempore! Doloribus vitae suscipit minus veritatis adipisci itaque, molestiae perferendis? Doloremque fugit commodi expedita?
+        </p>
+        <div class="discount">
+          <span>Discount Code:</span>
+          <input type="text" placeholder="Entere your code" />
+        </div>
+      </section>
+    </main>
+  </div>
 
   <script src="https://unpkg.com/vue@next"></script>
-  <script></script>
+  <script>
+    const { createApp } = Vue
+
+    const app = createApp()
+    app.mount('#app');
+  </script>
 </body>
 </html>
