@@ -1,84 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./style.css">
-  <title>VueCommerce</title>
-</head>
-<body>
-  <div id="app">
-    <header>
-      <h3>VueCommerce</h3>
-      <button class="cart">Cart (0)</button>
-      <div class="cart-content">
-        <div class="cart-content__product">
-          <img src="" alt="">
-          <span>{{ product.name }} - $ {{ new Intl.NumberFormat('es-CO').format(product.price) }}</span>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>VueCommerce</title>
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <h3>VueCommerce</h3>
+        <button class="cart">Cart (0)</button>
+        <div class="cart-content">
+          <div class="cart-content__product">
+            <img
+              v-bind:src="product.images[0].image"
+              :alt="product.name.toUpperCase()"
+            />
+            <span
+              >{{ product.name }} - $ {{ new
+              Intl.NumberFormat('es-CO').format(product.price) }}</span
+            >
+          </div>
+          <div class="cart-content__product">
+            <img :src="product.images[1].image" v-bind:alt="product.name" />
+            <span
+              >{{ product.name }} - $ {{ new
+              Intl.NumberFormat('es-CO').format(product.price) }}</span
+            >
+          </div>
         </div>
-        <div class="cart-content__product">
-          <img src="" alt="">
-          <span>{{ product.name }} - $ {{ new Intl.NumberFormat('es-CO').format(product.price) }}</span>
-        </div>
-      </div>
-    </header>
+      </header>
 
-    <main>
-      <section class="product">
-        <div class="product__thumbnails">
-          <div class="thumb"></div>
-          <div class="thumb"></div>
-        </div>
+      <main>
+        <section class="product">
+          <div class="product__thumbnails">
+            <div
+              class="thumb"
+              :class="{ active: activeImage === 0 }"
+              :style="{ backgroundImage: 'url(' + product.images[0].thumbnail + ')'}"
+            ></div>
+            <div
+              class="thumb"
+              :class="{ active: activeImage === 1 }"
+              :style="{ backgroundImage: 'url(' + product.images[1].thumbnail + ')'}"
+            ></div>
+          </div>
 
-        <div class="product__image">
-          <img src="" alt="">
-        </div>
-      </section>
+          <div class="product__image">
+            <img src="" alt="" />
+          </div>
+        </section>
 
-      <section class="description">
-        <h4>{{ product.name.toUpperCase() }} {{ product.stock === 0 ? '😭' : '😎' }}</h4>
-        <span class="badge new">New</span>
-        <span class="badge offer">Offer</span>
-        <p class="description__status"></p>
-        <p class="description__price">$ {{ new Intl.NumberFormat('es-CO').format(product.price) }}</p>
-        <p class="description__content">
-          {{ product.content }}
-        </p>
-        <div class="discount">
-          <span>Discount Code:</span>
-          <input type="text" placeholder="Entere your code" />
-        </div>
-      </section>
-    </main>
-  </div>
+        <section class="description">
+          <h4>
+            {{ product.name.toUpperCase() }} {{ product.stock === 0 ? '😭' :
+            '😎' }}
+          </h4>
+          <span class="badge new">New</span>
+          <span class="badge offer">Offer</span>
+          <p class="description__status"></p>
+          <p class="description__price">
+            $ {{ new Intl.NumberFormat('es-CO').format(product.price) }}
+          </p>
+          <p class="description__content">{{ product.content }}</p>
+          <div class="discount">
+            <span>Discount Code:</span>
+            <input type="text" placeholder="Entere your code" />
+          </div>
+        </section>
+      </main>
+    </div>
 
-  <script src="https://unpkg.com/vue@next"></script>
-  <script>
-    const { createApp } = Vue
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+      const { createApp } = Vue;
 
-    const app = createApp({
-      data() {
-        return {
-          product: {
-            name: 'Camera',
-            price: 450_000,
-            stock: 1,
-            content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium repellat repudiandae at non ipsa quidem culpa tempore! Doloribus vitae   suscipit minus veritatis adipisci itaque, molestiae perferendis? Doloremque fugit commodi expedita?`,
-            images: [
-              {
-                image: './images/camara.jpg',
-                thumbnail: './images/camara-thumb.jpg'
-              },
-              {
-                image: './images/camara-2.jpg',
-                thumbnail: './images/camara-2-thumb.jpg'
-              }
-            ]
-          }
-        }
-      }
-    })
-    app.mount('#app');
-  </script>
-</body>
+      const app = createApp({
+        data() {
+          return {
+            product: {
+              name: 'Camera',
+              price: 450_000,
+              stock: 1,
+              content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium repellat repudiandae at non ipsa quidem culpa tempore! Doloribus vitae   suscipit minus veritatis adipisci itaque, molestiae perferendis? Doloremque fugit commodi expedita?`,
+              images: [
+                {
+                  image: './images/camara.jpg',
+                  thumbnail: './images/camara-thumb.jpg',
+                },
+                {
+                  image: './images/camara-2.jpg',
+                  thumbnail: './images/camara-2-thumb.jpg',
+                },
+              ],
+            },
+            activeImage: 0,
+          };
+        },
+      });
+      app.mount('#app');
+    </script>
+  </body>
 </html>
