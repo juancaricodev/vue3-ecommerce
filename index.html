@@ -12,17 +12,16 @@
         <h3>VueCommerce</h3>
         <button class="cart">Cart (0)</button>
         <div class="cart-content" v-show="cartOpen">
-          <div class="cart-content__product">
+          <div
+            class="cart-content__product"
+            v-for="(product, index) in cart"
+            :key="product.name"
+            :class="{ 'bg-gray': index & 1 }"
+          >
             <img
               v-bind:src="product.images[0].image"
               :alt="product.name.toUpperCase()"
             />
-            <span>
-              {{ product.name }} - $ {{ new Intl.NumberFormat('es-CO').format(product.price) }}
-            </span>
-          </div>
-          <div class="cart-content__product">
-            <img :src="product.images[1].image" v-bind:alt="product.name" />
             <span>
               {{ product.name }} - $ {{ new Intl.NumberFormat('es-CO').format(product.price) }}
             </span>
@@ -34,14 +33,11 @@
         <section class="product">
           <div class="product__thumbnails">
             <div
+              v-for="(image, index) in product.images"
+              :key="image.thumbnail"
               class="thumb"
-              :class="{ active: activeImage === 0 }"
-              :style="{ backgroundImage: 'url(' + product.images[0].thumbnail + ')'}"
-            ></div>
-            <div
-              class="thumb"
-              :class="{ active: activeImage === 1 }"
-              :style="{ backgroundImage: 'url(' + product.images[1].thumbnail + ')'}"
+              :class="{ active: activeImage === index }"
+              :style="{ backgroundImage: 'url(' + product.images[index].thumbnail + ')' }"
             ></div>
           </div>
 
@@ -104,7 +100,63 @@
               offer: false,
             },
             cartOpen: true,
-            activeImage: 0
+            activeImage: 0,
+            cart: [
+              {
+                name: 'Camera PL',
+                price: 250_000,
+                stock: 7,
+                content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium repellat repudiandae at non ipsa quidem culpa tempore! Doloribus vitae   suscipit minus veritatis adipisci itaque, molestiae perferendis? Doloremque fugit commodi expedita?`,
+                images: [
+                  {
+                    image: './images/camara.jpg',
+                    thumbnail: './images/camara-thumb.jpg',
+                  },
+                  {
+                    image: './images/camara-2.jpg',
+                    thumbnail: './images/camara-2-thumb.jpg',
+                  },
+                ],
+                new: true,
+                offer: true,
+              },
+              {
+                name: 'Camera FD',
+                price: 180_000,
+                stock: 2,
+                content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium repellat repudiandae at non ipsa quidem culpa tempore! Doloribus vitae   suscipit minus veritatis adipisci itaque, molestiae perferendis? Doloremque fugit commodi expedita?`,
+                images: [
+                  {
+                    image: './images/camara.jpg',
+                    thumbnail: './images/camara-thumb.jpg',
+                  },
+                  {
+                    image: './images/camara-2.jpg',
+                    thumbnail: './images/camara-2-thumb.jpg',
+                  },
+                ],
+                new: true,
+                offer: false,
+              },
+              {
+                name: 'Camera DH',
+                price: 195_000,
+                stock: 1,
+                content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium repellat repudiandae at non ipsa quidem culpa tempore! Doloribus vitae   suscipit minus veritatis adipisci itaque, molestiae perferendis? Doloremque fugit commodi expedita?`,
+                images: [
+                  {
+                    image: './images/camara.jpg',
+                    thumbnail: './images/camara-thumb.jpg',
+                  },
+                  {
+                    image: './images/camara-2.jpg',
+                    thumbnail: './images/camara-2-thumb.jpg',
+                  }
+                ],
+                new: false,
+                offer: true
+              }
+            ]
           }
         },
       })
