@@ -52,27 +52,9 @@ app.component('product', {
       </button>
     </section>
   `,
+  props: ['product'],
   data() {
     return {
-      product: {
-        name: 'Camera',
-        price: 450_000,
-        stock: 6,
-        content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium repellat repudiandae at non ipsa quidem culpa tempore! Doloribus vitae   suscipit minus veritatis adipisci itaque, molestiae perferendis? Doloremque fugit commodi expedita?`,
-        images: [
-          {
-            image: '../images/camara.jpg',
-            thumbnail: '../images/camara-thumb.jpg',
-          },
-          {
-            image: '../images/camara-2.jpg',
-            thumbnail: '../images/camara-2-thumb.jpg',
-          },
-        ],
-        new: true,
-        offer: false,
-        quantity: 1
-      },
       activeImage: 0,
       discountCodes: ['VUE21', 'JUANCARICODEV']
     }
