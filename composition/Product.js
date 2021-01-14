@@ -21,8 +21,9 @@ app.component('product', {
       <h4>
         {{ product.name.toUpperCase() }} {{ product.stock === 0 ? '😭' : '😎' }}
       </h4>
-      <span class="badge new" v-if="product.new">New</span>
-      <span class="badge offer" v-if="product.offer">Offer</span>
+
+      <badges :product="product" ></badges>
+
       <p class="description__status" v-if="product.stock <= 5 && product.stock >1">
         There are just a few items left!
       </p>
