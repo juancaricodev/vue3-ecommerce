@@ -10,7 +10,9 @@
     <div id="app">
       <header>
         <h3>VueCommerce</h3>
-        <button class="cart" v-on:click="cartOpen = !cartOpen">Cart (0)</button>
+        <button class="cart" v-on:click="cartOpen = !cartOpen">
+          Cart ({{ cart.length }})
+        </button>
         <div class="cart-content" v-show="cartOpen">
           <div
             class="cart-content__product"
@@ -23,7 +25,7 @@
               :alt="product.name.toUpperCase()"
             />
             <span>
-              {{ product.name }} - $ {{ new Intl.NumberFormat('es-CO').format(product.price) }}
+              {{ product.name }} - $ {{ new Intl.NumberFormat('es-CO').format(product.price) }} ({{ product.quantity }})
             </span>
           </div>
         </div>
@@ -53,7 +55,7 @@
           </h4>
           <span class="badge new" v-if="product.new">New</span>
           <span class="badge offer" v-if="product.offer">Offer</span>
-          <p class="description__status" v-if="product.stock <= 5 && product.stock >1">
+          <p class="description__status" v-if="product.stock <= 5 && product.stock > 1">
             There are just a few items left!
           </p>
           <p class="description__status" v-else-if="product.stock === 1">
@@ -77,7 +79,7 @@
               @keyup.enter="applyDiscount($event)"
             />
           </div>
-          <button :disabled="product.stock === 0" @click="product.stock -= 1">
+          <button :disabled="product.stock === 0" @click="addToCart()">
             Add to Cart
           </button>
         </section>
@@ -94,7 +96,7 @@
             product: {
               name: 'Camera',
               price: 450_000,
-              stock: 11,
+              stock: 6,
               content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium repellat repudiandae at non ipsa quidem culpa tempore! Doloribus vitae   suscipit minus veritatis adipisci itaque, molestiae perferendis? Doloremque fugit commodi expedita?`,
               images: [
                 {
@@ -108,6 +110,7 @@
               ],
               new: true,
               offer: false,
+              quantity: 1
             },
             cartOpen: false,
             activeImage: 0,
@@ -118,10 +121,23 @@
         methods: {
           applyDiscount(event) {
             const discountCodeIndex = this.discountCodes.indexOf(event.target.value)
+
             if (discountCodeIndex >= 0) {
               this.product.price *= 50 / 100
               this.discountCodes.splice(discountCodeIndex, 1)
             }
+          },
+          addToCart() {
+            const prodIndex = this.cart.findIndex(prod => (
+              prod.name === this.product.name
+            ))
+
+            if (prodIndex >= 0) {
+              this.cart[prodIndex].quantity += 1
+            } else {
+              this.cart.push(this.product)
+            }
+            this.product.stock -= 1
           }
         }
       })
