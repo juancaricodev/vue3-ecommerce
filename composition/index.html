@@ -74,7 +74,7 @@
             <input
               type="text"
               placeholder="Entere your code"
-              @keyup.enter="product.price *= 50/100"
+              @keyup.enter="applyDiscount($event)"
             />
           </div>
           <button :disabled="product.stock === 0" @click="product.stock -= 1">
@@ -114,15 +114,23 @@
           const cartOpen = ref(false)
           const cart = ref([])
 
-          setTimeout(() => {
-            activeImage.value = 1
-          }, 2000);
+          const discountCodes = ref(['VUE21', 'JUANCARICODEV'])
+          function applyDiscount(event) {
+            const discountCodeIndex = discountCodes.value.indexOf(event.target.value)
+
+            if (discountCodeIndex >= 0) {
+              product.value.price *= 50 / 100
+              discountCodes.value.splice(discountCodeIndex, 1)
+            }
+          }
 
           return {
             product,
             activeImage,
             cartOpen,
-            cart
+            cart,
+
+            applyDiscount
           }
         }
       })
