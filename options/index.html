@@ -74,7 +74,7 @@
             <input
               type="text"
               placeholder="Entere your code"
-              @keyup.enter="applyDiscount()"
+              @keyup.enter="applyDiscount($event)"
             />
           </div>
           <button :disabled="product.stock === 0" @click="product.stock -= 1">
@@ -111,12 +111,17 @@
             },
             cartOpen: false,
             activeImage: 0,
-            cart: []
+            cart: [],
+            discountCodes: ['VUE21', 'JUANCARICODEV']
           }
         },
         methods: {
-          applyDiscount() {
-            this.product.price *= 50 / 100
+          applyDiscount(event) {
+            const discountCodeIndex = this.discountCodes.indexOf(event.target.value)
+            if (discountCodeIndex >= 0) {
+              this.product.price *= 50 / 100
+              this.discountCodes.splice(discountCodeIndex, 1)
+            }
           }
         }
       })
