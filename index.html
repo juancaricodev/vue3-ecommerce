@@ -10,7 +10,7 @@
     <div id="app">
       <header>
         <h3>VueCommerce</h3>
-        <button class="cart">Cart (0)</button>
+        <button class="cart" v-on:click="cartOpen = !cartOpen">Cart (0)</button>
         <div class="cart-content" v-show="cartOpen">
           <div
             class="cart-content__product"
@@ -38,11 +38,12 @@
               class="thumb"
               :class="{ active: activeImage === index }"
               :style="{ backgroundImage: 'url(' + product.images[index].thumbnail + ')' }"
+              @click="activeImage = index"
             ></div>
           </div>
 
           <div class="product__image">
-            <img src="" alt="" />
+            <img :src="product.images[activeImage].image" :alt="product.name" />
           </div>
         </section>
 
@@ -58,6 +59,9 @@
           <p class="description__status" v-else-if="product.stock === 1">
             This is the last unit!
           </p>
+          <p class="description__status" v-else-if="product.stock === 0">
+            We are sorry! There are not units left.
+          </p>
           <p class="description__status" v-else>
             There are a lot of units available!
           </p>
@@ -67,9 +71,15 @@
           <p class="description__content">{{ product.content }}</p>
           <div class="discount">
             <span>Discount Code:</span>
-            <input type="text" placeholder="Entere your code" />
+            <input
+              type="text"
+              placeholder="Entere your code"
+              @keyup.enter="product.price *= 50/100"
+            />
           </div>
-          <button :disabled="product.stock === 0">Add to Cart</button>
+          <button :disabled="product.stock === 0" @click="product.stock -= 1">
+            Add to Cart
+          </button>
         </section>
       </main>
     </div>
@@ -84,7 +94,7 @@
             product: {
               name: 'Camera',
               price: 450_000,
-              stock: 0,
+              stock: 11,
               content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium repellat repudiandae at non ipsa quidem culpa tempore! Doloribus vitae   suscipit minus veritatis adipisci itaque, molestiae perferendis? Doloremque fugit commodi expedita?`,
               images: [
                 {
@@ -99,7 +109,7 @@
               new: true,
               offer: false,
             },
-            cartOpen: true,
+            cartOpen: false,
             activeImage: 0,
             cart: [
               {
