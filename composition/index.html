@@ -10,7 +10,7 @@
     <div id="app">
       <header>
         <h3>VueCommerce</h3>
-        <button class="cart" v-on:click="cartOpen = !cartOpen">Cart (0)</button>
+        <button class="cart" v-on:click="cartOpen = !cartOpen">Cart ({{ cart.length }})</button>
         <div class="cart-content" v-show="cartOpen">
           <div
             class="cart-content__product"
@@ -23,7 +23,7 @@
               :alt="product.name.toUpperCase()"
             />
             <span>
-              {{ product.name }} - $ {{ new Intl.NumberFormat('es-CO').format(product.price) }}
+              {{ product.name }} - $ {{ new Intl.NumberFormat('es-CO').format(product.price) }} ({{ product.quantity }})
             </span>
           </div>
         </div>
@@ -77,7 +77,7 @@
               @keyup.enter="applyDiscount($event)"
             />
           </div>
-          <button :disabled="product.stock === 0" @click="product.stock -= 1">
+          <button :disabled="product.stock === 0" @click="addToCart()">
             Add to Cart
           </button>
         </section>
@@ -93,7 +93,7 @@
           const product = ref({
             name: 'Camera',
             price: 450_000,
-            stock: 11,
+            stock: 6,
             content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium repellat repudiandae at non ipsa quidem culpa tempore! Doloribus vitae   suscipit minus veritatis adipisci itaque, molestiae perferendis? Doloremque fugit commodi expedita?`,
             images: [
               {
@@ -106,13 +106,26 @@
               }
             ],
             new: true,
-            offer: false
+            offer: false,
+            quantity: 1
           })
 
           const activeImage = ref(0)
 
           const cartOpen = ref(false)
           const cart = ref([])
+          function addToCart() {
+            const prodIndex = cart.value.findIndex(prod => (
+              prod.name === product.value.name
+            ))
+
+            if (prodIndex >= 0) {
+              cart.value[prodIndex].quantity += 1
+            } else {
+              cart.value.push(product.value)
+            }
+            product.value.stock -= 1
+          }
 
           const discountCodes = ref(['VUE21', 'JUANCARICODEV'])
           function applyDiscount(event) {
@@ -127,8 +140,10 @@
           return {
             product,
             activeImage,
+
             cartOpen,
             cart,
+            addToCart,
 
             applyDiscount
           }
