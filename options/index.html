@@ -74,7 +74,7 @@
             <input
               type="text"
               placeholder="Entere your code"
-              @keyup.enter="product.price *= 50/100"
+              @keyup.enter="applyDiscount()"
             />
           </div>
           <button :disabled="product.stock === 0" @click="product.stock -= 1">
@@ -111,64 +111,14 @@
             },
             cartOpen: false,
             activeImage: 0,
-            cart: [
-              {
-                name: 'Camera PL',
-                price: 250_000,
-                stock: 7,
-                content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium repellat repudiandae at non ipsa quidem culpa tempore! Doloribus vitae   suscipit minus veritatis adipisci itaque, molestiae perferendis? Doloremque fugit commodi expedita?`,
-                images: [
-                  {
-                    image: '../images/camara.jpg',
-                    thumbnail: '../images/camara-thumb.jpg',
-                  },
-                  {
-                    image: '../images/camara-2.jpg',
-                    thumbnail: '../images/camara-2-thumb.jpg',
-                  },
-                ],
-                new: true,
-                offer: true,
-              },
-              {
-                name: 'Camera FD',
-                price: 180_000,
-                stock: 2,
-                content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium repellat repudiandae at non ipsa quidem culpa tempore! Doloribus vitae   suscipit minus veritatis adipisci itaque, molestiae perferendis? Doloremque fugit commodi expedita?`,
-                images: [
-                  {
-                    image: '../images/camara.jpg',
-                    thumbnail: '../images/camara-thumb.jpg',
-                  },
-                  {
-                    image: '../images/camara-2.jpg',
-                    thumbnail: '../images/camara-2-thumb.jpg',
-                  },
-                ],
-                new: true,
-                offer: false,
-              },
-              {
-                name: 'Camera DH',
-                price: 195_000,
-                stock: 1,
-                content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium repellat repudiandae at non ipsa quidem culpa tempore! Doloribus vitae   suscipit minus veritatis adipisci itaque, molestiae perferendis? Doloremque fugit commodi expedita?`,
-                images: [
-                  {
-                    image: '../images/camara.jpg',
-                    thumbnail: '../images/camara-thumb.jpg',
-                  },
-                  {
-                    image: '../images/camara-2.jpg',
-                    thumbnail: '../images/camara-2-thumb.jpg',
-                  }
-                ],
-                new: false,
-                offer: true
-              }
-            ]
+            cart: []
           }
         },
+        methods: {
+          applyDiscount() {
+            this.product.price *= 50 / 100
+          }
+        }
       })
       app.mount('#app');
     </script>
