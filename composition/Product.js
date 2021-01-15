@@ -48,28 +48,20 @@ app.component('product', {
           @keyup.enter="applyDiscount($event)"
         />
       </div>
-      <button :disabled="product.stock === 0" @click="addToCart()">
+      <button :disabled="product.stock === 0" @click="sendToCart()">
         Add to Cart
       </button>
     </section>
   `,
   props: ['product'],
-  setup(props) {
+  emits: ['sendtocart'],
+  setup(props, context) {
     const productState = reactive({
       activeImage: 0
     })
 
-    function addToCart() {
-      const prodIndex = cartState.cart.findIndex(prod => (
-        prod.name === props.product.name
-      ))
-
-      if (prodIndex >= 0) {
-        cartState.cart[prodIndex].quantity += 1
-      } else {
-        cartState.cart.push(props.product)
-      }
-      props.product.stock -= 1
+    function sendToCart() {
+      context.emit('sendtocart', props.product)
     }
 
     const discountCodes = ref(['VUE21', 'JUANCARICODEV'])
@@ -85,9 +77,9 @@ app.component('product', {
     return {
       ...toRefs(productState),
 
-      addToCart,
+      applyDiscount,
 
-      applyDiscount
+      sendToCart
     }
   }
 })
