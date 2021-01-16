@@ -43,88 +43,11 @@
 
     <script src="https://unpkg.com/vue@next"></script>
     <script>
-      const { createApp, ref, reactive, toRefs, watch, computed } = Vue
+      const { createApp, ref, reactive, toRefs, watch, computed, onMounted } = Vue
 
       const app = createApp({
         setup() {
-          const products = ref([
-            {
-              name: 'Camera LP',
-              price: 450_000,
-              stock: 6,
-              content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium repellat repudiandae at non ipsa quidem culpa tempore! Doloribus vitae   suscipit minus veritatis adipisci itaque, molestiae perferendis? Doloremque fugit commodi expedita?`,
-              images: [
-                {
-                  image: '../images/camara.jpg',
-                  thumbnail: '../images/camara-thumb.jpg',
-                },
-                {
-                  image: '../images/camara-2.jpg',
-                  thumbnail: '../images/camara-2-thumb.jpg',
-                }
-              ],
-              new: true,
-              offer: false,
-              quantity: 1
-            },
-            {
-              name: 'Camera TR',
-              price: 580_000,
-              stock: 3,
-              content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium repellat repudiandae at non ipsa quidem culpa tempore! Doloribus vitae   suscipit minus veritatis adipisci itaque, molestiae perferendis? Doloremque fugit commodi expedita?`,
-              images: [
-                {
-                  image: '../images/camara.jpg',
-                  thumbnail: '../images/camara-thumb.jpg',
-                },
-                {
-                  image: '../images/camara-2.jpg',
-                  thumbnail: '../images/camara-2-thumb.jpg',
-                }
-              ],
-              new: false,
-              offer: true,
-              quantity: 1
-            },
-            {
-              name: 'Camera WR',
-              price: 185_000,
-              stock: 7,
-              content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium repellat repudiandae at non ipsa quidem culpa tempore! Doloribus vitae   suscipit minus veritatis adipisci itaque, molestiae perferendis? Doloremque fugit commodi expedita?`,
-              images: [
-                {
-                  image: '../images/camara.jpg',
-                  thumbnail: '../images/camara-thumb.jpg',
-                },
-                {
-                  image: '../images/camara-2.jpg',
-                  thumbnail: '../images/camara-2-thumb.jpg',
-                }
-              ],
-              new: true,
-              offer: true,
-              quantity: 1
-            },
-            {
-              name: 'Camera PX',
-              price: 270_000,
-              stock: 9,
-              content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium repellat repudiandae at non ipsa quidem culpa tempore! Doloribus vitae   suscipit minus veritatis adipisci itaque, molestiae perferendis? Doloremque fugit commodi expedita?`,
-              images: [
-                {
-                  image: '../images/camara.jpg',
-                  thumbnail: '../images/camara-thumb.jpg',
-                },
-                {
-                  image: '../images/camara-2.jpg',
-                  thumbnail: '../images/camara-2-thumb.jpg',
-                }
-              ],
-              new: false,
-              offer: false,
-              quantity: 1
-            },
-          ])
+          const products = ref([])
 
           const cartState = reactive({
             cartOpen: false,
@@ -162,6 +85,17 @@
           //     }, 0)
           //   }
           // )
+
+          onMounted(() => {
+            console.log('mounted')
+          })
+
+          // setup() === created()
+          fetch('https://my-json-server.typicode.com/iosamuel/demo/products')
+            .then(res => res.json())
+            .then(data => {
+              products.value = data
+            })
 
           return {
             ...toRefs(cartState),
