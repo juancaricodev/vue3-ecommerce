@@ -90,7 +90,7 @@ app.component('product', {
     price__color() {
       if (this.product.stock <= 1) {
         return 'rgb(180, 30, 67)'
-      } else if (stock <= 5 && stock > 1) {
+      } else if (this.product.stock <= 5 && this.product.stock > 1) {
         return 'rgb(214, 89, 5)'
       }
 

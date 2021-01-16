@@ -58,7 +58,20 @@ app.component('product', {
   setup(props, context) {
     const productState = reactive({
       activeImage: 0,
-      price__color: 'rgb(104, 104, 209)'
+      // price__color: 'rgb(104, 104, 209)'
+    })
+
+    //There are two ways of using computing props.
+    // First one
+    const price__color = computed(() => {
+      // If something changes inside the condition, the computed property is recalculated
+      if (props.product.stock <= 1) {
+        return 'rgb(180, 30, 67)'
+      } else if (props.product.stock <= 5 && props.product.stock > 1) {
+        return 'rgb(214, 89, 5)'
+      }
+
+      return 'rgb(104, 104, 209)'
     })
 
     function sendToCart() {
@@ -83,24 +96,26 @@ app.component('product', {
       }
     )
 
-    watch(
-      () => props.product.stock,
+    // watch(
+    //   () => props.product.stock,
 
-      stock => {
-        if (stock <= 1) {
-          productState.price__color = 'rgb(180, 30, 67)'
-        } else if (stock <= 5 && stock > 1) {
-          productState.price__color = 'rgb(214, 89, 5)'
-        }
-      }
-    )
+    //   stock => {
+    //     if (stock <= 1) {
+    //       productState.price__color = 'rgb(180, 30, 67)'
+    //     } else if (stock <= 5 && stock > 1) {
+    //       productState.price__color = 'rgb(214, 89, 5)'
+    //     }
+    //   }
+    // )
 
     return {
       ...toRefs(productState),
 
       applyDiscount,
 
-      sendToCart
+      sendToCart,
+
+      price__color
     }
   }
 })
