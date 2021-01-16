@@ -59,7 +59,7 @@ app.component('product', {
     return {
       activeImage: 0,
       discountCodes: ['VUE21', 'JUANCARICODEV'],
-      price__color: 'rgb(104, 104, 209)'
+      // price__color: 'rgb(104, 104, 209)'
     }
   },
   methods: {
@@ -76,12 +76,25 @@ app.component('product', {
     }
   },
   watch: {
-    'product.stock'(stock) {
-      if (stock <= 1) {
-        this.price__color = 'rgb(180, 30, 67)'
+    // 'product.stock'(stock) {
+    //   if (stock <= 1) {
+    //     this.price__color = 'rgb(180, 30, 67)'
+    //   } else if (stock <= 5 && stock > 1) {
+    //     this.price__color = 'rgb(214, 89, 5)'
+    //   }
+    // }
+  },
+  computed: {
+  // Are functions that always return something
+    // price__color is now a reactive property
+    price__color() {
+      if (this.product.stock <= 1) {
+        return 'rgb(180, 30, 67)'
       } else if (stock <= 5 && stock > 1) {
-        this.price__color = 'rgb(214, 89, 5)'
+        return 'rgb(214, 89, 5)'
       }
+
+      return 'rgb(104, 104, 209)'
     }
   }
 })
