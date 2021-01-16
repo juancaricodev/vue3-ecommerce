@@ -36,7 +36,7 @@ app.component('product', {
       <p class="description__status" v-else>
         There are a lot of units available!
       </p>
-      <p class="description__price">
+      <p class="description__price" :style="{ color: price__color }">
         $ {{ new Intl.NumberFormat('es-CO').format(product.price) }}
       </p>
       <p class="description__content">{{ product.content }}</p>
@@ -58,7 +58,8 @@ app.component('product', {
   data() {
     return {
       activeImage: 0,
-      discountCodes: ['VUE21', 'JUANCARICODEV']
+      discountCodes: ['VUE21', 'JUANCARICODEV'],
+      price__color: 'rgb(104, 104, 209)'
     }
   },
   methods: {
@@ -72,6 +73,18 @@ app.component('product', {
     },
     sendToCart() {
       this.$emit('sendtocart', this.product)
+    }
+  },
+  watch: {
+    activeImage(value, oldValue) {
+      console.log(value, oldValue)
+    },
+    'product.stock'(stock) {
+      if (stock <= 1) {
+        this.price__color = 'rgb(180, 30, 67)'
+      } else if (stock <= 5 && stock > 1) {
+        this.price__color = 'rgb(214, 89, 5)'
+      }
     }
   }
 })
