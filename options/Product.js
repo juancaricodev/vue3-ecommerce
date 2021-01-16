@@ -76,9 +76,6 @@ app.component('product', {
     }
   },
   watch: {
-    activeImage(value, oldValue) {
-      console.log(value, oldValue)
-    },
     'product.stock'(stock) {
       if (stock <= 1) {
         this.price__color = 'rgb(180, 30, 67)'
