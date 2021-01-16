@@ -58,21 +58,32 @@ app.component('product', {
   setup(props, context) {
     const productState = reactive({
       activeImage: 0,
-      // price__color: 'rgb(104, 104, 209)'
+
+      // Second way of implementing a Computing Property
+      // This way the c.p. don't need to be returned from setup()
+      price__color: computed(() => {
+        if (props.product.stock <= 1) {
+          return 'rgb(180, 30, 67)'
+        } else if (props.product.stock <= 5 && props.product.stock > 1) {
+          return 'rgb(214, 89, 5)'
+        }
+
+        return 'rgb(104, 104, 209)'
+      })
     })
 
-    //There are two ways of using computing props.
-    // First one
-    const price__color = computed(() => {
-      // If something changes inside the condition, the computed property is recalculated
-      if (props.product.stock <= 1) {
-        return 'rgb(180, 30, 67)'
-      } else if (props.product.stock <= 5 && props.product.stock > 1) {
-        return 'rgb(214, 89, 5)'
-      }
+    // //There are two ways of using computing props.
+    // // First one
+    // const price__color = computed(() => {
+    //   // If something changes inside the condition, the computed property is recalculated
+    //   if (props.product.stock <= 1) {
+    //     return 'rgb(180, 30, 67)'
+    //   } else if (props.product.stock <= 5 && props.product.stock > 1) {
+    //     return 'rgb(214, 89, 5)'
+    //   }
 
-      return 'rgb(104, 104, 209)'
-    })
+    //   return 'rgb(104, 104, 209)'
+    // })
 
     function sendToCart() {
       context.emit('sendtocart', props.product)
@@ -115,7 +126,7 @@ app.component('product', {
 
       sendToCart,
 
-      price__color
+      // price__color
     }
   }
 })
