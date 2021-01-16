@@ -74,18 +74,6 @@
             product.stock -= 1
           }
 
-          // watch(
-          //   cartState.cart,
-
-          //   (value, oldValue) => {
-          //     cartState.total = cartState.cart.reduce((prev, curr) => {
-          //       const prevPrice = prev.price || prev
-          //       const prevQuantity = prev.quantity || 1
-          //       return prevPrice * prevQuantity + curr.price * curr.quantity
-          //     }, 0)
-          //   }
-          // )
-
           onMounted(() => {
             console.log('mounted')
           })
