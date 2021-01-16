@@ -36,7 +36,7 @@ app.component('product', {
       <p class="description__status" v-else>
         There are a lot of units available!
       </p>
-      <p class="description__price">
+      <p class="description__price" :style="{ color: price__color }">
         $ {{ new Intl.NumberFormat('es-CO').format(product.price) }}
       </p>
       <p class="description__content">{{ product.content }}</p>
@@ -57,7 +57,8 @@ app.component('product', {
   emits: ['sendtocart'],
   setup(props, context) {
     const productState = reactive({
-      activeImage: 0
+      activeImage: 0,
+      price__color: 'rgb(104, 104, 209)'
     })
 
     function sendToCart() {
@@ -73,6 +74,26 @@ app.component('product', {
         discountCodes.value.splice(discountCodeIndex, 1)
       }
     }
+
+    watch(
+      () => productState.activeImage,
+
+      (val, oldVal) => {
+        console.log(val, oldVal)
+      }
+    )
+
+    watch(
+      () => props.product.stock,
+
+      stock => {
+        if (stock <= 1) {
+          productState.price__color = 'rgb(180, 30, 67)'
+        } else if (stock <= 5 && stock > 1) {
+          productState.price__color = 'rgb(214, 89, 5)'
+        }
+      }
+    )
 
     return {
       ...toRefs(productState),
